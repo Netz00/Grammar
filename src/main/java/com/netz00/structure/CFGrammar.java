@@ -1,6 +1,7 @@
 package com.netz00.structure;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,32 +10,18 @@ import java.util.stream.Stream;
  * Context-free grammar
  */
 public class CFGrammar {
-    private List<Variable> V;
-    private List<Terminal> T;
+    private LinkedHashSet<Variable> V;
+    private LinkedHashSet<Terminal> T;
 
-    private List<Production> P;
+    private LinkedHashSet<Production> P;
     private Variable S;
 
 
-    public CFGrammar(List<Variable> v, List<Terminal> t, Variable s) {
-        V = v;
-        T = t;
-        S = s;
-        P = new ArrayList<>();
-    }
-
-    public CFGrammar(List<Variable> v, List<Terminal> t, List<Production> p, Variable s) {
-        V = v;
-        T = t;
-        P = p;
-        S = s;
-    }
-
     public CFGrammar() {
 
-        V = new ArrayList<>();
-        T = new ArrayList<>();
-        P = new ArrayList<>();
+        V = new LinkedHashSet<>();
+        T = new LinkedHashSet<>();
+        P = new LinkedHashSet<>();
 
     }
 
@@ -214,11 +201,9 @@ public class CFGrammar {
          */
 
         // remove duplicates
-        V =alive.stream()
-            .distinct()
-            .collect(Collectors.toList());
+        V = new LinkedHashSet<>(alive);
 
-        P = aliveProductions;
+        P = new LinkedHashSet<>(aliveProductions);
 
 
         return dead;
@@ -271,7 +256,7 @@ public class CFGrammar {
                 T.remove((Terminal) c);
 
 
-        P = aliveProductions;
+        P = new LinkedHashSet<>(aliveProductions);
 
 
         return unreachableCharacters;

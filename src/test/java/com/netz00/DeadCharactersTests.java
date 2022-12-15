@@ -36,7 +36,7 @@ public class DeadCharactersTests {
                 .addStart('S');
 
         // When
-        CFGrammar.removeUselessCharacters().toString();
+        CFGrammar.removeDeadVariables().toString();
 
         // Then
         assertEquals(CFGrammar.toString(), CFGrammarRes.toString());

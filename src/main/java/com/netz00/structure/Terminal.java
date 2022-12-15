@@ -1,18 +1,11 @@
 package com.netz00.structure;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Terminal extends GrammarCharacter {
-    private static List<Character> allowedChars;
+    private static final int start1 = 'a';
+    private static final int end1 = 'z';
+    private static final int start2 = '0';
+    private static final int end2 = '9';
 
-    static {
-        allowedChars = new ArrayList<Character>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g'));
-    }
-
-    public Terminal() {
-    }
 
     public Terminal(Character c) {
         setaChar(c);
@@ -20,7 +13,9 @@ public class Terminal extends GrammarCharacter {
 
     @Override
     boolean checkCharacter(char aChar) {
-        return allowedChars.contains(aChar);
+
+        return start1 <= (int) aChar && end1 >= (int) aChar
+                || start2 <= (int) aChar && end2 >= (int) aChar;
     }
 
     @Override

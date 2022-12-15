@@ -14,29 +14,10 @@ public class App {
         System.out.println("Context-free grammar");
 
 
-        List<Variable> V = new ArrayList<>(
-                Arrays.asList(
-                        new Variable('S'),
-                        new Variable('A'),
-                        new Variable('B'),
-                        new Variable('C')
-                )
-        );
-
-        List<Terminal> T = new ArrayList<>(
-                Arrays.asList(
-                        new Terminal('a'),
-                        new Terminal('b'),
-                        new Terminal('c'),
-                        new Terminal('d')
-                )
-        );
-
-
-        Variable S = new Variable('S');
-
-        CFGrammar CFGrammar = new CFGrammar(V, T, S);
-        CFGrammar.addProduction("1 S->aABS")
+        CFGrammar CFGrammar = new CFGrammar()
+                .addVariables("S, A, B, C")
+                .addTerminals("a, b, c, d")
+                .addProduction("1 S->aABS")
                 .addProduction("2 S->bCACd")
                 .addProduction("3 B->bAB")
                 .addProduction("4 A->cSA")
@@ -44,7 +25,8 @@ public class App {
                 .addProduction("6 A->bAB")
                 .addProduction("7 B->cSB")
                 .addProduction("8 C->cS")
-                .addProduction("9 C->c");
+                .addProduction("9 C->c")
+                .addStart('S');
 
 
         System.out.println("Grammar");

@@ -12,6 +12,47 @@ public class UnreachableCharactersTests {
 
         // Given
         CFGrammar CFGrammar = new CFGrammar()
+                .addVariables("S, A, B, C")
+                .addTerminals("a, b, c, d")
+                .addProduction("1 S->aABS")
+                .addProduction("2 S->bCACd")
+                .addProduction("3 B->bAB")
+                .addProduction("4 A->cSA")
+                .addProduction("5 A->cCC")
+                .addProduction("6 A->bAB")
+                .addProduction("7 B->cSB")
+                .addProduction("8 C->cS")
+                .addProduction("9 C->c")
+                .addStart('S');
+
+        CFGrammar CFGrammarRes = new CFGrammar()
+                .addVariables("S, A, B, C")
+                .addTerminals("a, b, c, d")
+                .addProduction("1 S->aABS")
+                .addProduction("2 S->bCACd")
+                .addProduction("3 B->bAB")
+                .addProduction("4 A->cSA")
+                .addProduction("5 A->cCC")
+                .addProduction("6 A->bAB")
+                .addProduction("7 B->cSB")
+                .addProduction("8 C->cS")
+                .addProduction("9 C->c")
+                .addStart('S');
+
+
+        // When
+        CFGrammar.removeUnreachableCharacters().toString();
+
+
+        // Then
+        assertEquals(CFGrammar.toString(), CFGrammarRes.toString());
+    }
+
+    @Test
+    public void Grammar2() {
+
+        // Given
+        CFGrammar CFGrammar = new CFGrammar()
                 .addVariables("S, A, B, C, D, E")
                 .addTerminals("a, b, c, d, e, f, g")
                 .addProduction("1 S->aAB")
@@ -41,6 +82,33 @@ public class UnreachableCharactersTests {
                 .addProduction("10 D->eA")
                 .addProduction("11 E->fA")
                 .addProduction("12 E->g")
+                .addStart('S');
+
+        // When
+        CFGrammar.removeUnreachableCharacters().toString();
+
+        // Then
+        assertEquals(CFGrammar.toString(), CFGrammarRes.toString());
+    }
+
+    @Test
+    public void Grammar3() {
+
+        // Given
+        CFGrammar CFGrammar = new CFGrammar()
+                .addVariables("S, A, B")
+                .addTerminals("a")
+                .addProduction("1 S->AB")
+                .addProduction("2 S->a")
+                .addProduction("3 A->a")
+                .addStart('S');
+
+        CFGrammar CFGrammarRes = new CFGrammar()
+                .addVariables("S, A, B")
+                .addTerminals("a")
+                .addProduction("1 S->AB")
+                .addProduction("2 S->a")
+                .addProduction("3 A->a")
                 .addStart('S');
 
         // When

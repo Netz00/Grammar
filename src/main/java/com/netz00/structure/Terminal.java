@@ -15,7 +15,8 @@ public class Terminal extends GrammarCharacter {
     boolean checkCharacter(char aChar) {
 
         return start1 <= (int) aChar && end1 >= (int) aChar
-                || start2 <= (int) aChar && end2 >= (int) aChar;
+                || start2 <= (int) aChar && end2 >= (int) aChar
+                || aChar == 'ε';
     }
 
     @Override

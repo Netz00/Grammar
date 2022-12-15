@@ -1,5 +1,7 @@
 package com.netz00;
 
+import com.netz00.frontend.GrammarParser;
+import com.netz00.simplifiers.UselessCharacterRemover;
 import com.netz00.structure.CFGrammar;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ public class DeadCharactersTests {
     public void Grammar1() {
 
         // Given
-        CFGrammar CFGrammar = new CFGrammar()
+        CFGrammar cfGrammar = new GrammarParser()
                 .addVariables("S, A, B, C")
                 .addTerminals("a, b, c, d")
                 .addProduction("1 S->aABS")
@@ -23,9 +25,10 @@ public class DeadCharactersTests {
                 .addProduction("7 B->cSB")
                 .addProduction("8 C->cS")
                 .addProduction("9 C->c")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
-        CFGrammar CFGrammarRes = new CFGrammar()
+        CFGrammar CFGrammarRes = new GrammarParser()
                 .addVariables("S, A, C")
                 .addTerminals("a, b, c, d")
                 .addProduction("2 S->bCACd")
@@ -33,20 +36,21 @@ public class DeadCharactersTests {
                 .addProduction("5 A->cCC")
                 .addProduction("8 C->cS")
                 .addProduction("9 C->c")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
         // When
-        CFGrammar.removeDeadVariables().toString();
+        CFGrammar result = new UselessCharacterRemover(cfGrammar).removeDeadVariables().result;
 
         // Then
-        assertEquals(CFGrammar.toString(), CFGrammarRes.toString());
+        assertEquals(result.toString(), CFGrammarRes.toString());
     }
 
     @Test
     public void Grammar2() {
 
         // Given
-        CFGrammar CFGrammar = new CFGrammar()
+        CFGrammar cfGrammar = new GrammarParser()
                 .addVariables("S, A, B, C, D, E")
                 .addTerminals("a, b, c, d, e, f, g")
                 .addProduction("1 S->aAB")
@@ -61,10 +65,11 @@ public class DeadCharactersTests {
                 .addProduction("10 D->eA")
                 .addProduction("11 E->fA")
                 .addProduction("12 E->g")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
 
-        CFGrammar CFGrammarRes = new CFGrammar()
+        CFGrammar CFGrammarRes = new GrammarParser()
                 .addVariables("S, A, B, C, D, E")
                 .addTerminals("a, b, c, d, e, f, g")
                 .addProduction("1 S->aAB")
@@ -79,13 +84,14 @@ public class DeadCharactersTests {
                 .addProduction("10 D->eA")
                 .addProduction("11 E->fA")
                 .addProduction("12 E->g")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
         // When
-        CFGrammar.removeDeadVariables().toString();
+        CFGrammar result = new UselessCharacterRemover(cfGrammar).removeDeadVariables().result;
 
         // Then
-        assertEquals(CFGrammar.toString(), CFGrammarRes.toString());
+        assertEquals(result.toString(), CFGrammarRes.toString());
     }
 
 
@@ -93,26 +99,28 @@ public class DeadCharactersTests {
     public void Grammar3() {
 
         // Given
-        CFGrammar CFGrammar = new CFGrammar()
+        CFGrammar cfGrammar = new GrammarParser()
                 .addVariables("S, A, B")
                 .addTerminals("a")
                 .addProduction("1 S->AB")
                 .addProduction("2 S->a")
                 .addProduction("3 A->a")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
-        CFGrammar CFGrammarRes = new CFGrammar()
+        CFGrammar CFGrammarRes = new GrammarParser()
                 .addVariables("S, A")
                 .addTerminals("a")
                 .addProduction("2 S->a")
                 .addProduction("3 A->a")
-                .addStart('S');
+                .addStart('S')
+                .build();
 
         // When
-        CFGrammar.removeDeadVariables().toString();
+        CFGrammar result = new UselessCharacterRemover(cfGrammar).removeDeadVariables().result;
 
         // Then
-        assertEquals(CFGrammar.toString(), CFGrammarRes.toString());
+        assertEquals(result.toString(), CFGrammarRes.toString());
     }
 
 }

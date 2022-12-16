@@ -4,7 +4,6 @@ public class Variable extends GrammarCharacter {
     private static final int start = 'A';
     private static final int end = 'S';
 
-
     public Variable(Character c) {
         setaChar(c);
     }

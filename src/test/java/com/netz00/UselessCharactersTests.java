@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.netz00.frontend.GrammarParser;
-import com.netz00.simplifiers.UselessCharacterRemover;
+import com.netz00.converter.UselessCharacterRemover;
 import com.netz00.structure.CFGrammar;
 import org.junit.jupiter.api.Test;
 

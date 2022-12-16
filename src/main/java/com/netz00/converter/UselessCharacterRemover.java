@@ -1,4 +1,4 @@
-package com.netz00.simplifiers;
+package com.netz00.converter;
 
 import com.netz00.structure.*;
 

@@ -69,4 +69,20 @@ public class Production {
         return false;
     }
 
+    public boolean isEpsilonProduction() {
+
+        if (rightSide.size() == 1 && !rightSide.get(0).isVariable() && rightSide.get(0).getaChar() == 'ε')
+            return true;
+
+        return false;
+    }
+
+    public boolean rightSideContainsOnlyVariables(List<Variable> characters) {
+
+        for (GrammarCharacter c : rightSide)
+            if (c.isVariable() && !characters.contains(c))
+                return false;
+
+        return true;
+    }
 }

@@ -1,12 +1,17 @@
 package com.netz00;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import com.netz00.frontend.GrammarParser;
 import com.netz00.converter.UselessCharacterRemover;
+import com.netz00.frontend.GrammarParser;
 import com.netz00.structure.CFGrammar;
+import com.netz00.structure.GrammarCharacter;
+import com.netz00.structure.Variable;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UselessCharactersTests {
 
@@ -122,5 +127,89 @@ public class UselessCharactersTests {
         assertEquals(result.toString(), CFGrammarRes.toString());
     }
 
+    @Test
+    public void Grammar4() {
+
+        // Given
+        CFGrammar cfGrammar = new GrammarParser()
+                .addVariables("S, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R")
+                .addTerminals("0, 1")
+                .addProduction("1 S->A")
+                .addProduction("2 S->E")
+                .addProduction("3 A->0BA")
+                .addProduction("4 A->0CD")
+                .addProduction("5 E->0BE")
+                .addProduction("6 B->0CF")
+                .addProduction("7 B->0BB ")
+                .addProduction("8 B->0CG ")
+                .addProduction("9 E->0BC")
+                .addProduction("10 E->0CH")
+                .addProduction("11 B->1G")
+                .addProduction("12 C->1H")
+                .addProduction("13 G->1I")
+                .addProduction("14 H->1J")
+                .addProduction("15 I->1")
+                .addProduction("16 A->ε")
+                .addStart('S')
+                .build();
+
+        CFGrammar CFGrammarRes = new GrammarParser()
+                .addVariables("S, A, B, G, I")
+                .addTerminals("0, 1")
+                .addProduction("1 S->A")
+                .addProduction("3 A->0BA")
+                .addProduction("7 B->0BB")
+                .addProduction("11 B->1G")
+                .addProduction("13 G->1I")
+                .addProduction("15 I->1")
+                .addProduction("16 A->ε")
+                .addStart('S')
+                .build();
+
+        // When
+        UselessCharacterRemover result = new UselessCharacterRemover(cfGrammar).removeUselessCharacters();
+
+        // Then
+        assertEquals(result.result.toString(), CFGrammarRes.toString());
+
+        List<Variable> deadVariablesExpected = Arrays.asList(
+                new Variable('C'),
+                new Variable('D'),
+                new Variable('E'),
+                new Variable('F'),
+                new Variable('H'),
+                new Variable('J'),
+                new Variable('K'),
+                new Variable('L'),
+                new Variable('M'),
+                new Variable('N'),
+                new Variable('O'),
+                new Variable('P'),
+                new Variable('Q'),
+                new Variable('R')
+        );
+        assertEquals(result.deadVariables.toString(), deadVariablesExpected.toString());
+
+        List<GrammarCharacter> unreachableCharactersExpected = new ArrayList<>();
+        assertEquals(result.unreachableCharacters.toString(), unreachableCharactersExpected.toString());
+
+        List<GrammarCharacter> uselessCharactersExpected = Arrays.asList(
+                new Variable('C'),
+                new Variable('D'),
+                new Variable('E'),
+                new Variable('F'),
+                new Variable('H'),
+                new Variable('J'),
+                new Variable('K'),
+                new Variable('L'),
+                new Variable('M'),
+                new Variable('N'),
+                new Variable('O'),
+                new Variable('P'),
+                new Variable('Q'),
+                new Variable('R')
+        );
+        assertEquals(result.uselessCharacters.toString(), uselessCharactersExpected.toString());
+    }
 
 }

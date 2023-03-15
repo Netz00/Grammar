@@ -97,16 +97,19 @@ public class GrammarParser {
                     .distinct()
                     .collect(Collectors.toList());
 
-            for (Character ch : part2.toCharArray()) {
-                GrammarCharacter variable = union.stream().parallel()
-                        .filter(c -> c.getaChar() == ch).findAny()
-                        .orElseThrow(() ->
-                                new RuntimeException("Invalid production, character is not defined: " + ch)
-                        );
+            if (part2.length() == 1 && part2.charAt(0) == 'ε')
+                rightSide.add(new Terminal('ε'));
+            else
+                for (Character ch : part2.toCharArray()) {
+                    GrammarCharacter variable = union.stream().parallel()
+                            .filter(c -> c.getaChar() == ch).findAny()
+                            .orElseThrow(() ->
+                                    new RuntimeException("Invalid production, character is not defined: " + ch)
+                            );
 
-                rightSide.add(variable);
+                    rightSide.add(variable);
 
-            }
+                }
 
             Production P = new Production(index, leftSide, rightSide);
 
